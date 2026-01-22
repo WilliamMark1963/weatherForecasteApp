@@ -160,7 +160,7 @@ const displayMainCard = function(loc,data){
 
             <div>
               <p class="font-semibold">Temperature</p>
-              <p>${data[0].temp}<sup>°</sup>C</p>
+              <p id="mainTemp">${data[0].temp}<sup>°</sup>C</p>c
             </div>
 
             <div>
@@ -181,6 +181,10 @@ const displayMainCard = function(loc,data){
         </div>
         `
         parentCard.innerHTML= mainCard;
+        currentTempC = data[0].temp;
+        currentUnit = "C";
+        updateTempUI();
+
 }
 
 // Displaying search in selection
