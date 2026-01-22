@@ -1,1 +1,74 @@
 @import "tailwindcss";
+*{
+      box-sizing: border-box;
+}
+
+body{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: black;
+    background-image: linear-gradient(40deg, rgb(50, 36, 137), rgb(203, 113, 113));
+    overflow-x: hidden;
+}
+
+main{
+    min-height: 100vh;
+    padding: 10px;
+}
+
+.cloudy{
+    @apply bg-gradient-to-b from-gray-300 to-gray-500 relative;
+}
+
+.sunny{
+   @apply bg-gradient-to-b from-sky-300 to-yellow-200 relative
+}
+
+.rainy{
+    @apply bg-gradient-to-b from-gray-700 to-gray-900 relative
+}
+
+.snow{
+    @apply bg-gradient-to-b from-blue-100 to-gray-200 relative;
+}
+
+
+
+
+.btn{
+    @apply w-full py-2 text-lg bg-blue-700 text-white rounded-xl hover:bg-blue-800 transition;
+}
+
+.btn-green{
+    @apply w-[25%] mx-auto py-2 text-lg bg-green-700 text-white rounded-xl hover:bg-green-800 transition;
+}
+
+.popUp{
+    @apply fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden;
+}
+.popUp-show{
+    display: flex;
+}
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.2s ease-out;
+}
+
+
+.card-base{
+    @apply  bg-black/20 text-white rounded-xl shadow-2xl shadow-sm  p-3 w-64 shrink-0 hover:shadow-md transition;
+}
+
+.card-container{
+    @apply flex gap-6 overflow-x-auto px-2 pb-4;
+    scrollbar-width: none;
+}
