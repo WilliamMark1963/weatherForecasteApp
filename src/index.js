@@ -141,49 +141,122 @@ const addCards = function(rawCity,data){
 const displayMainCard = function(loc,data){
        
         updateBackground(data[0].weather);
-        let mainCard= `
-        <div class="w-full bg-black/20 text-white rounded-xl shadow-2xl p-6 backdrop-blur-2xl">
-          <div class="flex  mb-4 ">
-            <img src="https://openweathermap.org/img/wn/${data[0].icon}@2x.png" alt="Weather Icon" class="w-24 h-24" />
-          </div>
+        // let mainCard= `
+        // <div class="w-full bg-black/20 text-white rounded-xl shadow-2xl p-6 backdrop-blur-2xl">
+        //   <div class="flex items-center justify-between mb-4"">
+        //   <!---Weather Icon-->
+        //     <img src="https://openweathermap.org/img/wn/${data[0].icon}@2x.png" alt="Weather Icon" class="w-24 h-24" />
+        //     <!-- Toggle Bar only for this card change deg to fahrenhit -->
+        //         <div
+        //         class="flex items-center gap-2 bg-black/30 backdrop-blur-md rounded-full p-1"
+        //       >
+        //         <button
+        //           id="celsiusBtn"
+        //           class="px-3 py-1 text-sm rounded-full bg-white text-black font-semibold transition"
+        //         >
+        //           °C
+        //         </button>
+        //         <button
+        //           id="fahrenheitBtn"
+        //           class="px-3 py-1 text-sm rounded-full text-white transition"
+        //         >
+        //           °F
+        //         </button>
+        //       </div>
+        //   </div>
 
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-lg">
-            <div>
-              <p class="font-semibold">Location</p>
-              <p>${loc}</p>
-            </div>
+        //   <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-lg">
+        //     <div>
+        //       <p class="font-semibold">Location</p>
+        //       <p>${loc}</p>
+        //     </div>
 
-            <div>
-              <p class="font-semibold">Date</p>
-              <p>${data[0].date}</p>
-            </div>
+        //     <div>
+        //       <p class="font-semibold">Date</p>
+        //       <p>${data[0].date}</p>
+        //     </div>
 
-            <div>
-              <p class="font-semibold">Temperature</p>
-              <p id="mainTemp">${data[0].temp}<sup>°</sup>C</p>c
-            </div>
+        //     <div>
+        //       <p class="font-semibold">Temperature</p>
+        //       <p id="mainTemp">${data[0].temp}<sup>°</sup>C</p>c
+        //     </div>
 
-            <div>
-              <p class="font-semibold">Weather</p>
-              <p>${data[0].weather}</p>
-            </div>
+        //     <div>
+        //       <p class="font-semibold">Weather</p>
+        //       <p>${data[0].weather}</p>
+        //     </div>
 
-            <div>
-              <p class="font-semibold">Humidity</p>
-              <p>${data[0].humidity}%</p>
-            </div>
+        //     <div>
+        //       <p class="font-semibold">Humidity</p>
+        //       <p>${data[0].humidity}%</p>
+        //     </div>
 
-            <div>
-              <p class="font-semibold">Wind Speed</p>
-              <p>${data[0].wind} mph</p>
-            </div>
-          </div>
-        </div>
-        `
+        //     <div>
+        //       <p class="font-semibold">Wind Speed</p>
+        //       <p>${data[0].wind} mph</p>
+        //     </div>
+        //   </div>
+        // </div>
+        // `
+
+        let mainCard = `
+                                <div class="w-full bg-black/20 text-white rounded-xl shadow-2xl p-6 backdrop-blur-2xl">
+                                <div class="flex items-center justify-between mb-4">
+                                <img src="https://openweathermap.org/img/wn/${data[0].icon}@2x.png"
+                                        alt="Weather Icon"
+                                        class="w-24 h-24" />
+
+                                <div class="flex items-center gap-2 bg-black/30 backdrop-blur-md rounded-full p-1">
+                                        <button id="celsiusBtn"
+                                        class="px-3 py-1 text-sm rounded-full bg-white text-black font-semibold transition">
+                                        °C
+                                        </button>
+                                        <button id="fahrenheitBtn"
+                                        class="px-3 py-1 text-sm rounded-full text-white transition">
+                                        °F
+                                        </button>
+                                </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-lg">
+                                <div>
+                                        <p class="font-semibold">Location</p>
+                                        <p>${loc}</p>
+                                </div>
+
+                                <div>
+                                        <p class="font-semibold">Date</p>
+                                        <p>${data[0].date}</p>
+                                </div>
+
+                                <div>
+                                        <p class="font-semibold">Temperature</p>
+                                        <p id="mainTemp">${data[0].temp}<sup>°</sup>C</p>
+                                </div>
+
+                                <div>
+                                        <p class="font-semibold">Weather</p>
+                                        <p>${data[0].weather}</p>
+                                </div>
+
+                                <div>
+                                        <p class="font-semibold">Humidity</p>
+                                        <p>${data[0].humidity}%</p>
+                                </div>
+
+                                <div>
+                                        <p class="font-semibold">Wind Speed</p>
+                                        <p>${data[0].wind} mph</p>
+                                </div>
+                                </div>
+                                </div>
+                                `;
+
         parentCard.innerHTML= mainCard;
         currentTempC = data[0].temp;
         currentUnit = "C";
-        updateTempUI();
+
+        setupTempToggle();
 
 }
 
@@ -269,36 +342,51 @@ searchList.addEventListener("change", () => {
 let currentUnit = "C";
 let currentTempC = null;
 
-const celsiusBtn = document.getElementById("celsiusBtn");
-const fahrenheitBtn = document.getElementById("fahrenheitBtn");
-
 const toFahrenheit = (c) => (c * 9) / 5 + 32;
 
-const updateTempUI = () => {
+const setupTempToggle = () => {
+  const celsiusBtn = document.getElementById("celsiusBtn");
+  const fahrenheitBtn = document.getElementById("fahrenheitBtn");
+  const tempEl = document.getElementById("mainTemp");
+
+  if (!celsiusBtn || !fahrenheitBtn || !tempEl) return;
+
+  const updateTempUI = () => {
   const tempEl = document.getElementById("mainTemp");
   if (!tempEl || currentTempC === null) return;
 
   if (currentUnit === "C") {
     tempEl.innerHTML = `${currentTempC}<sup>°</sup>C`;
+
     celsiusBtn.classList.add("bg-white", "text-black");
+    celsiusBtn.classList.remove("text-white");
+
     fahrenheitBtn.classList.remove("bg-white", "text-black");
+    fahrenheitBtn.classList.add("text-white");
+
   } else {
     tempEl.innerHTML = `${toFahrenheit(currentTempC).toFixed(1)}<sup>°</sup>F`;
+
     fahrenheitBtn.classList.add("bg-white", "text-black");
+    fahrenheitBtn.classList.remove("text-white");
+
     celsiusBtn.classList.remove("bg-white", "text-black");
+    celsiusBtn.classList.add("text-white");
   }
 };
 
-celsiusBtn.addEventListener("click", () => {
-  currentUnit = "C";
-  updateTempUI();
-});
+  celsiusBtn.onclick = () => {
+    currentUnit = "C";
+    updateTempUI();
+  };
 
-fahrenheitBtn.addEventListener("click", () => {
-  currentUnit = "F";
-  updateTempUI();
-});
+  fahrenheitBtn.onclick = () => {
+    currentUnit = "F";
+    updateTempUI();
+  };
 
+  updateTempUI();
+};
 
 
 
