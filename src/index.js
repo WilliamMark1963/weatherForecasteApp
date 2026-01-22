@@ -87,6 +87,7 @@ const updateBackground = (weather) => {
   }
 };
 
+
 // Displaying small card
 const addCards = function(rawCity,data){
         bottomParentCard.innerHTML=" ";
@@ -141,63 +142,6 @@ const addCards = function(rawCity,data){
 const displayMainCard = function(loc,data){
        
         updateBackground(data[0].weather);
-        // let mainCard= `
-        // <div class="w-full bg-black/20 text-white rounded-xl shadow-2xl p-6 backdrop-blur-2xl">
-        //   <div class="flex items-center justify-between mb-4"">
-        //   <!---Weather Icon-->
-        //     <img src="https://openweathermap.org/img/wn/${data[0].icon}@2x.png" alt="Weather Icon" class="w-24 h-24" />
-        //     <!-- Toggle Bar only for this card change deg to fahrenhit -->
-        //         <div
-        //         class="flex items-center gap-2 bg-black/30 backdrop-blur-md rounded-full p-1"
-        //       >
-        //         <button
-        //           id="celsiusBtn"
-        //           class="px-3 py-1 text-sm rounded-full bg-white text-black font-semibold transition"
-        //         >
-        //           °C
-        //         </button>
-        //         <button
-        //           id="fahrenheitBtn"
-        //           class="px-3 py-1 text-sm rounded-full text-white transition"
-        //         >
-        //           °F
-        //         </button>
-        //       </div>
-        //   </div>
-
-        //   <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-lg">
-        //     <div>
-        //       <p class="font-semibold">Location</p>
-        //       <p>${loc}</p>
-        //     </div>
-
-        //     <div>
-        //       <p class="font-semibold">Date</p>
-        //       <p>${data[0].date}</p>
-        //     </div>
-
-        //     <div>
-        //       <p class="font-semibold">Temperature</p>
-        //       <p id="mainTemp">${data[0].temp}<sup>°</sup>C</p>c
-        //     </div>
-
-        //     <div>
-        //       <p class="font-semibold">Weather</p>
-        //       <p>${data[0].weather}</p>
-        //     </div>
-
-        //     <div>
-        //       <p class="font-semibold">Humidity</p>
-        //       <p>${data[0].humidity}%</p>
-        //     </div>
-
-        //     <div>
-        //       <p class="font-semibold">Wind Speed</p>
-        //       <p>${data[0].wind} mph</p>
-        //     </div>
-        //   </div>
-        // </div>
-        // `
 
         let mainCard = `
                                 <div class="w-full bg-black/20 text-white rounded-xl shadow-2xl p-6 backdrop-blur-2xl">

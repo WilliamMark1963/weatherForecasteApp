@@ -15,9 +15,13 @@ JAVASCRIPT
 ### API
 I used API from https://openweathermap.org it is a free version.
 
+### Rule
+This webpage must run on a VS Live Server or any other Live server to render the icons
+
 ### Most Difficult Parts
 Adding toggle bar fucntionality
 Adding current location fucntionality
 
 ### gitHub Link
 https://github.com/WilliamMark1963/weatherForecasteApp.git
+
