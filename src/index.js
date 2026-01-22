@@ -278,9 +278,9 @@ const displayHistory = function(selectedCity = "") {
 };
 
 
-// MAIN FUNCTION
+// MAIN SEARCH FUNCTION
  const getForecasteData = async function(APIKEY){
-                const rawCity = city.value.trim();
+                const rawCity = city.value.trim().toLowerCase();
 
                 if (!rawCity) {
                 showPopUp("Error", "Please enter the city name");
@@ -332,10 +332,70 @@ searchList.addEventListener("change", () => {
 
   if (!selectedCity) return;
 
-  city.value = selectedCity; // optional UX touch
+  city.value = selectedCity; 
   getForecasteData(APIKEY);
 });
 
+// Current Location HARD one
+const currentLocationBtn = document.getElementById("crtLoc");
+const getForecastByCoords = async (lat, lon) => {
+  const API = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`;
+
+  try {
+    const res = await fetch(API);
+    const data = await res.json();
+
+    if (data.cod !== "200") {
+      showPopUp("Error", data.message || "Unable to fetch location weather");
+      return;
+    }
+
+    // Filter only 12:00 PM entries
+    let filtered = data.list.filter(item =>
+      item.dt_txt.includes("12:00:00")
+    );
+
+    filtered = filterData(filtered);
+
+    const cityName = data.city.name.trim().toLowerCase();
+
+    displayMainCard(cityName, filtered);
+    addCards(cityName, filtered);
+    updateBackground(filtered[0].weather);
+
+    // store in history
+    const history = getStorage();
+    if (!history.includes(cityName)) {
+      history.push(cityName);
+      localStorage.setItem("searchData", JSON.stringify(history));
+      displayHistory(cityName);
+    }
+  } catch (err) {
+    console.error(err);
+    showPopUp("Error", "Failed to get weather for your location");
+  }
+};
+
+currentLocationBtn.addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    showPopUp("Error", "Geolocation is not supported by your browser");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      getForecastByCoords(latitude, longitude);
+    },
+    (error) => {
+      if (error.code === error.PERMISSION_DENIED) {
+        showPopUp("Permission Denied", "Please allow location access");
+      } else {
+        showPopUp("Error", "Unable to fetch your location");
+      }
+    }
+  );
+});
 
 
 // Celsius to Fahernhite
