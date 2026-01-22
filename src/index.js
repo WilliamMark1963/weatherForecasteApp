@@ -261,7 +261,39 @@ searchList.addEventListener("change", () => {
 
 
 
+// Celsius to Fahernhite
+let currentUnit = "C";
+let currentTempC = null;
 
+const celsiusBtn = document.getElementById("celsiusBtn");
+const fahrenheitBtn = document.getElementById("fahrenheitBtn");
+
+const toFahrenheit = (c) => (c * 9) / 5 + 32;
+
+const updateTempUI = () => {
+  const tempEl = document.getElementById("mainTemp");
+  if (!tempEl || currentTempC === null) return;
+
+  if (currentUnit === "C") {
+    tempEl.innerHTML = `${currentTempC}<sup>°</sup>C`;
+    celsiusBtn.classList.add("bg-white", "text-black");
+    fahrenheitBtn.classList.remove("bg-white", "text-black");
+  } else {
+    tempEl.innerHTML = `${toFahrenheit(currentTempC).toFixed(1)}<sup>°</sup>F`;
+    fahrenheitBtn.classList.add("bg-white", "text-black");
+    celsiusBtn.classList.remove("bg-white", "text-black");
+  }
+};
+
+celsiusBtn.addEventListener("click", () => {
+  currentUnit = "C";
+  updateTempUI();
+});
+
+fahrenheitBtn.addEventListener("click", () => {
+  currentUnit = "F";
+  updateTempUI();
+});
 
 
 
